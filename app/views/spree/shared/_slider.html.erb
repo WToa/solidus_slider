@@ -1,17 +1,25 @@
 <% if slider.size > 0 %>
-    <slick slides-to-show="1" ng-if="true" settings="{arrows:false,centerMode:false,centerPadding:'0',autoplay: true,autoplaySpeed: 5000,fade:true}">
-      <% slider.each_with_index do |slide, index| %>
-          <div class="item">
-            <%= link_to image_tag(slide.slide_image.url, alt: slide.slide_caption,class:'img-responsive'), url_for(slide.slide_link) %>
-            <div>
-              <% if slide.show_caption? %>
-                  <h3><%= slide.slide_caption %></h3>
-              <% end %>
-              <% unless slide.body.blank? %>
-                  <p><%= slide.body %><p>
-              <% end %>
-            </div>
-          </div>
-      <% end %>
-    </slick>
-<% end %>
+    <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="f">
+        <ol class="carousel-indicators">
+            <% slider.each_with_index do |slide, index| %>
+                <li data-target="#carouselExampleIndicators" data-slide-to="<%= index %>" class="<%= index.zero? ? 'active' : ''%>"></li>
+            <%end%>
+        </ol>
+        <div class="carousel-inner">
+            <% slider.each_with_index do |slide, index| %>
+                <div class="carousel-item <%= index.zero? ? 'active' : '' %>">
+                    <%= link_to image_tag(slide.slide_image.url, alt: slide.slide_caption, class:'img-fluid d-block w-100'), url_for(slide.slide_link) %>
+                </div>
+            <%end%>
+        </div>
+        <!-- Controls -->
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+<%end%>
